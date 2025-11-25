@@ -8,20 +8,34 @@ datasource db {
 }
 
 model Ride {
-  id          String     @id @default(uuid())
-  pickupLat   Float
-  pickupLng   Float
-  pickupName  String
-  destLat     Float
-  destLng     Float
-  destName    String
-  fare        Int
-  status      RideStatus @default(REQUESTED)
-  passengerId String
-  passenger   User       @relation("PassengerRides", fields: [passengerId], references: [id])
-  driverId    String?
-  driver      Driver?    @relation(fields: [driverId], references: [id])
-  createdAt   DateTime   @default(now())
+  id              String     @id @default(uuid())
+  pickupLat       Float
+  pickupLng       Float
+  pickupName      String
+  destLat         Float
+  destLng         Float
+  destName        String
+  baseFare        Float      @default(0.0)
+  distanceFare    Float      @default(0.0)
+  timeFare        Float      @default(0.0)
+  surgeMultiplier Float      @default(1.0)
+  totalFare       Float
+  status          RideStatus @default(REQUESTED)
+  passengerId     String
+  passenger       User       @relation("PassengerRides", fields: [passengerId], references: [id])
+  driverId        String?
+  driver          Driver?    @relation(fields: [driverId], references: [id])
+  createdAt       DateTime   @default(now())
+}
+
+model PricingConfig {
+  id             String @id @default(uuid())
+  baseFare       Float
+  perKmRate      Float
+  perMinuteRate  Float
+  surgeMultiplier Float // Default surge multiplier
+  isActive       Boolean @default(true) // To allow multiple configurations over time
+  createdAt      DateTime @default(now())
 }
 
 model User {

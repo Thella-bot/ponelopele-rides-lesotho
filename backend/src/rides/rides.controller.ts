@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Get, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Request, Query } from '@nestjs/common';
 import { RidesService } from './rides.service';
 import { SocketGateway } from '../socket/socket.gateway';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Assuming this guard exists
+import { EstimateFareDto } from './dto/estimate-fare.dto';
 
 @Controller('rides')
 export class RidesController {
@@ -21,5 +22,17 @@ export class RidesController {
   @Get('history')
   async getRideHistory(@Request() req) {
     return this.ridesService.getRideHistory(req.user.id);
+  }
+
+  @Get('estimate')
+  async estimateFare(@Query() query: EstimateFareDto) {
+    const { pickupLat, pickupLng, destLat, destLng, durationMinutes } = query;
+    return this.ridesService.estimateFare(
+      pickupLat,
+      pickupLng,
+      destLat,
+      destLng,
+      durationMinutes,
+    );
   }
 }

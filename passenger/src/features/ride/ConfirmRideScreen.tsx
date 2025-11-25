@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator, SafeAreaView } from 'react-native';
-import { requestRide } from '../../lib/api';
+import { requestRide, estimateRideFare, setAuthToken } from '../../lib/api';
 import COLORS from '../../theme/colors';
 import * as SecureStore from 'expo-secure-store';
 import { jwtDecode } from 'jwt-decode';
@@ -27,33 +27,56 @@ interface ConfirmRideParams {
   destination: DestinationData;
 }
 
+interface EstimatedFare {
+  baseFare: number;
+  distanceFare: number;
+  timeFare: number;
+  surgeMultiplier: number;
+  totalFare: number;
+}
+
 export default function ConfirmRideScreen({ route, navigation }: { route: { params: ConfirmRideParams }; navigation: any }) {
   const { pickupData, destination } = route.params || ({} as ConfirmRideParams);
   const [loading, setLoading] = useState(false);
   const [mobileMoney, setMobileMoney] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [passengerId, setPassengerId] = useState<string | null>(null);
+  const [estimatedFare, setEstimatedFare] = useState<EstimatedFare | null>(null);
 
   useEffect(() => {
-    const getPassengerId = async () => {
+    const loadData = async () => {
       const token = await SecureStore.getItemAsync('token');
       if (token) {
+        setAuthToken(token); // Set auth token for API calls
         const decodedToken: { sub: string } = jwtDecode(token);
         setPassengerId(decodedToken.sub);
       }
+
+      if (pickupData && destination) {
+        try {
+          const fare = await estimateRideFare({
+            pickupLat: pickupData.latitude,
+            pickupLng: pickupData.longitude,
+            destLat: destination.latitude,
+            destLng: destination.longitude,
+            // durationMinutes is optional for estimation, will be more accurate during ride actualization
+          });
+          setEstimatedFare(fare);
+        } catch (error) {
+          console.error('Error estimating fare:', error);
+          Alert.alert('Error', 'Could not estimate fare. Please try again later.');
+        }
+      }
     };
-    getPassengerId();
-  }, []);
+    loadData();
+  }, [pickupData, destination]);
 
-  const isValid = useMemo(() => Boolean(passengerId && pickupData && destination && destination.name), [passengerId, pickupData, destination]);
-
-  // Placeholder for dynamic fare; could be fetched from backend via a quote endpoint
-  const fare = useMemo(() => 480, []);
+  const isValid = useMemo(() => Boolean(passengerId && pickupData && destination && destination.name && estimatedFare), [passengerId, pickupData, destination, estimatedFare]);
 
   const requestRideNow = useCallback(async () => {
     if (loading) return;
     if (!isValid) {
-      Alert.alert('Missing details', 'Please provide a valid destination and ensure you are logged in.');
+      Alert.alert('Missing details', 'Please provide a valid destination and ensure you are logged in, and fare is estimated.');
       return;
     }
     setLoading(true);
@@ -120,10 +143,12 @@ export default function ConfirmRideScreen({ route, navigation }: { route: { para
           </Text>
         </TouchableOpacity>
 
-        <View style={styles.fare}>
-          <Text style={styles.fareText}>Estimated Fare</Text>
-          <Text style={styles.amount}>M {fare}</Text>
-        </View>
+        {estimatedFare && (
+          <View style={styles.fare}>
+            <Text style={styles.fareText}>Estimated Fare</Text>
+            <Text style={styles.amount}>M {estimatedFare.totalFare.toFixed(2)}</Text>
+          </View>
+        )}
 
         <TouchableOpacity
           style={[styles.requestBtn, (!isValid || loading) && styles.requestBtnDisabled]}
