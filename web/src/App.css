@@ -1,0 +1,461 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop_shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of_type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Custom styles for Urban Taxis app */
+.app-container {
+  min-height: 100vh;
+  background: var(--color-white);
+}
+
+.launch-banner {
+  background: var(--color-success);
+  color: var(--color-white);
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.launch-banner-dismiss-button {
+  margin-left: 12px;
+  background: rgba(255,255,255,0.15); /* Keep for transparency effect */
+  color: var(--color-white);
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.error-boundary-container {
+  padding: 24px;
+}
+
+.error-boundary-title {
+  color: var(--color-primary);
+}
+
+.redirect-section {
+  padding: 24px;
+}
+
+.redirect-button {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.home-container {
+  padding: 40px;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.home-title {
+  font-size: 48px;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.home-subtitle {
+  font-size: 20px;
+  margin: 10px 0 30px;
+}
+
+.home-button {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 18px 60px;
+  border-radius: 30px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.secondary-button { /* New style for secondary buttons */
+  background: var(--color-text-light);
+  margin-top: 10px;
+}
+
+
+.pickup-full-container {
+  height: 100vh;
+  position: relative;
+}
+
+.pickup-map {
+  width: 100%;
+  height: 100%;
+}
+
+.pickup-panel {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.7); /* Using literal for transparency, could be CSS var */
+  color: var(--color-white);
+  padding: 15px;
+  border-radius: 12px;
+  max-width: 360px;
+}
+
+.pickup-w3w {
+  margin: 0 0 8px 0;
+}
+
+.pickup-btn {
+  margin-top: 10px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pickup-map-unavailable-container {
+  padding: 20px;
+}
+
+.pickup-map-unavailable-title {
+  color: var(--color-primary);
+  margin-top: 20px;
+}
+
+.destination-container {
+  padding: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.destination-title {
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.destination-search-input {
+  width: 100%;
+  padding: 18px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: 2px solid #E0E0E0; /* Keeping for now as it's a specific shade of grey */
+  margin-bottom: 20px;
+}
+
+.destination-landmarks-list {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.destination-landmark-item {
+  padding: 16px;
+  background: #F0F5FF; /* Keeping for now, might not be a direct color var */
+  color: var(--color-primary);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.destination-landmark-item.selected {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.destination-landmark-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.destination-landmark-w3w {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.destination-continue-button {
+  width: 100%;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.confirm-container {
+  padding: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.confirm-title {
+  color: var(--color-primary);
+}
+
+.confirm-detail-card {
+  background: #F8F9FF; /* Keeping for now */
+  padding: 25px;
+  border-radius: 16px;
+  margin: 20px 0;
+}
+
+.confirm-detail-label {
+  font-size: 14px;
+  color: var(--color-text-light);
+}
+
+.confirm-detail-value {
+  color: var(--color-primary);
+}
+
+.confirm-payment-method-button {
+  padding: 20px;
+  background: #F0F0F0; /* Keeping for now */
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 20px 0;
+  width: 100%;
+  border: none;
+  text-align: left;
+}
+
+.confirm-payment-method-button.mobile-money-selected {
+  background: #E8F5E8; /* Keeping for now */
+}
+
+.confirm-payment-method-text {
+  margin: 0;
+}
+
+.confirm-fare-card {
+  background: #E8F5E8; /* Keeping for now */
+  padding: 25px;
+  border-radius: 16px;
+}
+
+.confirm-fare-value {
+  color: var(--color-success);
+  margin: 0;
+}
+
+.confirm-request-button {
+  width: 100%;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 22px;
+  font-size: 22px;
+  font-weight: bold;
+  border: none;
+  border-radius: 16px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.confirm-request-button:disabled {
+  background: #A0B8FF; /* Keeping for now, a lighter shade of primary */
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.confirm-driver-note {
+  margin-top: 30px;
+  color: var(--color-text-light);
+  font-size: 14px;
+}
+
+.auth-container {
+  padding: 40px;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.auth-title {
+  font-size: 36px;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--color-text-light);
+}
+
+.auth-button {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.auth-footer-text {
+  /* No specific styles needed here, defaults should be fine */
+}
+
+.auth-link {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* Ride History Screen Styles */
+.ride-history-container {
+  padding: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ride-history-title {
+  color: var(--color-primary);
+  margin-bottom: 30px;
+}
+
+.loading-container, .error-container, .no-rides-message, .no-profile-message {
+  padding: 20px;
+  color: var(--color-text-light);
+}
+
+.ride-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ride-item {
+  background: #F8F9FF; /* Keeping for now */
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.ride-item p {
+  margin: 5px 0;
+  color: #333; /* Keeping for now */
+}
+
+.back-button {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Profile Screen Styles */
+.profile-container {
+  padding: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.profile-title {
+  color: var(--color-primary);
+  margin-bottom: 30px;
+}
+
+.profile-details {
+  background: #F8F9FF; /* Keeping for now */
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.profile-details p {
+  margin: 10px 0;
+  color: #333; /* Keeping for now */
+}
+
+.profile-details strong {
+  color: var(--color-primary);
+}
+.error-message {
+  color: var(--color-danger);
+  background-color: #ffe0e0;
+  border: 1px solid var(--color-danger);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.success-message {
+  color: var(--color-success);
+  background-color: #e0ffe0;
+  border: 1px solid var(--color-success);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
