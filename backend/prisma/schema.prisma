@@ -1,3 +1,4 @@
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -5,6 +6,33 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  password       String
+  name           String
+  role           Role
+  driver         Driver?
+  passengerRides Ride[]   @relation("PassengerRides")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Driver {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  lat         Float
+  lng         Float
+  heading     Float
+  isOnline    Boolean  @default(false)
+  isInRide    Boolean  @default(false)
+  lastUpdated DateTime @default(now())
+  rides       Ride[]
+
+  @@index([lat, lng])
 }
 
 model Ride {
@@ -15,51 +43,28 @@ model Ride {
   destLat         Float
   destLng         Float
   destName        String
-  baseFare        Float      @default(0.0)
-  distanceFare    Float      @default(0.0)
-  timeFare        Float      @default(0.0)
+  baseFare        Decimal    @default(0)
+  distanceFare    Decimal    @default(0)
+  timeFare        Decimal    @default(0)
   surgeMultiplier Float      @default(1.0)
-  totalFare       Float
+  totalFare       Decimal
   status          RideStatus @default(REQUESTED)
   passengerId     String
   passenger       User       @relation("PassengerRides", fields: [passengerId], references: [id])
   driverId        String?
   driver          Driver?    @relation(fields: [driverId], references: [id])
   createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 }
 
 model PricingConfig {
-  id             String @id @default(uuid())
-  baseFare       Float
-  perKmRate      Float
-  perMinuteRate  Float
-  surgeMultiplier Float // Default surge multiplier
-  isActive       Boolean @default(true) // To allow multiple configurations over time
-  createdAt      DateTime @default(now())
-}
-
-model User {
-  id             String  @id @default(uuid())
-  email          String  @unique
-  password       String
-  name           String
-  role           Role
-  driver         Driver? @relation(fields: [driverId], references: [id])
-  driverId       String? @unique
-  passengerRides Ride[]  @relation("PassengerRides")
-}
-
-model Driver {
-  id       String  @id @default(uuid())
-  lat      Float
-  lng      Float
-  heading  Float
-  isOnline Boolean @default(false)
-  isInRide Boolean @default(false)
-  user     User?
-  rides    Ride[]
-
-  @@index([lat, lng])
+  id              String   @id @default(uuid())
+  baseFare        Decimal
+  perKmRate       Decimal
+  perMinuteRate   Decimal
+  surgeMultiplier Float    @default(1.0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
 }
 
 enum Role {
